@@ -1,0 +1,61 @@
+<div class="modal-header">
+    <h4 class="modal-title">Create a meeting with me</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="card lesson-border">
+        <div class="card-body">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="titre">Title</label>
+                        <input type="text" id="titre" class="form-control" [(ngModel)]="meeting.title" name="titre" placeholder="Titre" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="email">Mail</label>
+                        <input type="email" id="email" class="form-control" [(ngModel)]="meeting.mail" name="mail" placeholder="default@default.def" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="startHour">Start date</label>
+                        <input type="datetime-local" class="form-control" id="startHour" [(ngModel)]="start_date" name="startHour" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="endHour">End date</label>
+                        <input type="datetime-local" class="form-control" id="endHour" [(ngModel)]=end_date name="endHour" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="color">Color</label>
+                        <select id="color" class="form-control" [(ngModel)]="meeting.color" name="color">
+                            <option style="color: #ff0000" value="red" selected>Red</option>
+                            <option style="color: #0000ff" value="blue">Blue</option>
+                            <option style="color: #ffbf0f" value="yellow">Yellow</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="description">Description</label>
+                        <textarea id="description" class="form-control" [(ngModel)]="meeting.description" name="description" placeholder="" rows="3"></textarea>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+    <button
+            type="submit"
+            (click)="save()"
+            [class]="meeting.id == null ? 'btn btn-success' : 'btn btn-warning'"
+    >Save</button>
+</div>

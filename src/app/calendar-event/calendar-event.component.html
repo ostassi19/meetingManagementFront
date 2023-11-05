@@ -1,0 +1,59 @@
+<div class="container">
+    <digitalUP-calendar-header
+      [(view)]="view"
+      [(viewDate)]="viewDate"
+      (viewDateChange)="fetchEvents()"
+      (viewChange)="fetchEvents()"
+      (addMeeting)="openModal()"
+    >
+    </digitalUP-calendar-header>
+
+    <ng-template #loading>
+      <div class="text-center">
+        <i class="fas fa-spin fa-spinner fa-5x"></i> <br />
+        Loading events...
+      </div>
+    </ng-template>
+
+    <div *ngIf="events$ | async; else loading; let events">
+      <div [ngSwitch]="view">
+        <mwl-calendar-month-view
+          *ngSwitchCase="'month'"
+          [viewDate]="viewDate"
+          [events]="events"
+          [activeDayIsOpen]="activeDayIsOpen"
+          (dayClicked)="dayClicked($event.day)"
+          (eventTimesChanged)="eventTimesChanged($event)"
+        >
+        </mwl-calendar-month-view>
+        <mwl-calendar-week-view
+          *ngSwitchCase="'week'"
+          [viewDate]="viewDate"
+          [events]="events"
+          (eventClicked)="eventClicked($event.event)"
+          [dayStartHour]="5"
+          dayEndHour="20"
+          (eventTimesChanged)="eventTimesChanged($event)"
+        >
+        </mwl-calendar-week-view>
+        <mwl-calendar-day-view
+          *ngSwitchCase="'day'"
+          [viewDate]="viewDate"
+          [events]="events"
+          (eventClicked)="eventClicked($event.event)"
+          [dayStartHour]="5"
+          (eventTimesChanged)="eventTimesChanged($event)"
+          dayEndHour="20"
+        >
+        </mwl-calendar-day-view>
+      </div>
+    </div>
+
+    <br /><br /><br />
+<ng-template #modalContent let-close="close">
+    <app-meeting-modal
+            [meeting]="meeting"
+            (addMeeting)="modifier($event)"
+    ></app-meeting-modal>
+</ng-template>
+</div>
